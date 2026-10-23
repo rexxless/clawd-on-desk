@@ -1954,6 +1954,16 @@ html, body {
     padding: 10px 14px 0;
   }
 }
+/* Claude profiles group: .row's display rule outranks the UA [hidden] rule,
+   and config-dir paths have no spaces to wrap at. */
+.claude-profile-row[hidden],
+.claude-profile-add-row[hidden] {
+  display: none;
+}
+.claude-profile-row .row-desc,
+.claude-profiles-note {
+  overflow-wrap: anywhere;
+}
 .row-desc-collapsed {
   display: none;
 }

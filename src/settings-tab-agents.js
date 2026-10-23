@@ -1680,9 +1680,11 @@
       className: "row-sub claude-profiles-intro",
     });
     helpers.attachDescriptionDisclosure(intro.element);
+    // Always-visible fact line under the title (.row-desc-extra stays out of
+    // the (i) fold); the control column is too narrow for a sentence.
     const introNote = document.createElement("span");
-    introNote.className = "row-note claude-profiles-primary-dir";
-    intro.controlElement.appendChild(introNote);
+    introNote.className = "row-desc row-desc-extra claude-profiles-note";
+    intro.textElement.appendChild(introNote);
     rows.push(intro.element);
 
     const profileRows = new Map();
