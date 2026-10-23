@@ -107,6 +107,25 @@ test("disabling or removing a profile stops its pet", () => {
   assert.strictEqual(instances.isRunning("hobby"), false);
 });
 
+test("children inherit the primary's --user-data-dir", () => {
+  const spawned = [];
+  const instances = createClaudeProfileInstances({
+    isPackaged: true,
+    execPath: "/app/Clawd",
+    argv: ["/app/Clawd", "--user-data-dir=/tmp/ud", "--inspect"],
+    spawn: (command, args) => {
+      const child = new EventEmitter();
+      child.pid = 1;
+      child.unref = () => {};
+      spawned.push(args);
+      return child;
+    },
+  });
+  instances.reconcile([WORK]);
+  assert.strictEqual(spawned[0][0], "--user-data-dir=/tmp/ud");
+  assert.ok(!spawned[0].includes("--inspect"));
+});
+
 test("openSettings re-launches with the settings flag for a running profile", () => {
   const { instances, spawned } = makeHarness();
   assert.strictEqual(instances.openSettings("work"), false);

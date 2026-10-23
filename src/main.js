@@ -720,6 +720,7 @@ const claudeProfileInstances = _claudeProfileMode ? null : createClaudeProfileIn
   appImagePath: process.env.APPIMAGE || null,
   platform: process.platform,
   settingsArg: SETTINGS_WINDOW_LAUNCH_ARG,
+  argv: process.argv,
 });
 let _claudeProfileInstancesStarted = false;
 function reconcileClaudeProfileInstances() {

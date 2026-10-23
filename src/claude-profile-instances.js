@@ -49,11 +49,19 @@ function createClaudeProfileInstances(options = {}) {
   const kill = options.kill || ((pid, signal) => process.kill(pid, signal));
   const log = options.log || ((msg) => console.warn(`Clawd profiles: ${msg}`));
   const settingsArg = options.settingsArg || null;
+  // A primary started with --user-data-dir (dev builds, tests) must keep its
+  // profile pets under that directory too.
+  const inheritedArgs = (Array.isArray(options.argv) ? options.argv : [])
+    .filter((arg) => typeof arg === "string" && arg.startsWith("--user-data-dir="));
   // id -> { profile, slot, key, child }
   const running = new Map();
 
   function spawnChild(profile, slot, extraArgs = []) {
-    const launch = buildChildLaunch(options, [...buildProfileModeArgs(profile, slot), ...extraArgs]);
+    const launch = buildChildLaunch(options, [
+      ...inheritedArgs,
+      ...buildProfileModeArgs(profile, slot),
+      ...extraArgs,
+    ]);
     let child;
     try {
       child = spawn(launch.command, launch.args, {
