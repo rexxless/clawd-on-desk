@@ -21747,7 +21747,7 @@ describe("settings renderer browser environment", () => {
     assert.ok(!agentsSource.includes("buildAgentInstallHintBanner"));
     assert.ok(!css.includes(".agent-badge"));
 
-    const defaultGroupIndex = css.indexOf("grid-template-columns: 58px minmax(0, 1fr)");
+    const defaultGroupIndex = css.indexOf("grid-template-columns: 112px minmax(0, 1fr)");
     const mobileGroupIndex = css.indexOf("@media (max-width: 720px)", defaultGroupIndex);
     assert.ok(defaultGroupIndex >= 0 && mobileGroupIndex > defaultGroupIndex,
       "the narrow-window single-column rule must come after the default two-column rule");
